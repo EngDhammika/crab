@@ -5,10 +5,6 @@
 # Search for the term 'Added' to find all locations in the program where
 # a modification is made to support the 'observation count' and removal
 # of spurious landmarks.
-#
-# slam_10_f_counter
-# Claus Brenner, 20.02.2013
-#from lego_robot import *
 
 from slam_g_library import get_cylinders_from_scan, write_cylinders,\
      write_error_ellipses, get_mean, get_error_ellipse_and_heading_variance,\

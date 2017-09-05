@@ -33,6 +33,8 @@ class Particle:
         """Utility: return current number of landmarks in this particle."""
         return len(self.landmark_positions)
 
+
+
     @staticmethod
     def g(state, control, w):
         """State transition. This is exactly the same method as in the Kalman

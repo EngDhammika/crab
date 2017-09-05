@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/Robot.iml" filepath="$PROJECT_DIR$/.idea/Robot.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../SLAM Lectures/Unit_PP/.idea/Unit_PP.iml" filepath="$PROJECT_DIR$/../SLAM Lectures/Unit_PP/.idea/Unit_PP.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../Veiwer/.idea/Veiwer.iml" filepath="$PROJECT_DIR$/../Veiwer/.idea/Veiwer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../database_client/.idea/database_client.iml" filepath="$PROJECT_DIR$/../database_client/.idea/database_client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../SLAM Lectures/imply/.idea/imply.iml" filepath="$PROJECT_DIR$/../SLAM Lectures/imply/.idea/imply.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../server/.idea/server.iml" filepath="$PROJECT_DIR$/../server/.idea/server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../sim_server/.idea/sim_server.iml" filepath="$PROJECT_DIR$/../sim_server/.idea/sim_server.iml" />
+    </modules>
+  </component>
+</project>

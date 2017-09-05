@@ -1,5 +1,3 @@
-# This file contains helper functions for Unit G of the SLAM lecture.
-# Claus Brenner, 27 JAN 2013
 from math import sin, cos, atan2, sqrt, pi
 #from lego_robot import LegoLogfile
 import numpy as np

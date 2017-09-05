@@ -2,10 +2,6 @@ import Pyro4
 import sys,time
 
 
-
-
-
-
 robot = Pyro4.Proxy("PYRONAME:example.robot")    # use name server object lookup uri shortcut
 print(robot)
 

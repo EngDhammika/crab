@@ -6,6 +6,7 @@
 # a modification is made to support the 'observation count' and removal
 # of spurious landmarks.
 
+
 from slam_g_library import get_cylinders_from_scan, write_cylinders,\
      write_error_ellipses, get_mean, get_error_ellipse_and_heading_variance,\
      print_particles,write_scanData
@@ -364,6 +365,7 @@ class FastSLAM:
         self.last_tiks = ticks
         return self.motor_ticks
 #......................................................................
+
 def connect():
     con = MySQLdb.connect(host='localhost', user='root', passwd='DUKS1992', db='ROBOT')
     try:
@@ -383,6 +385,19 @@ def SQL_CMD(con,query):
     cur = con.cursor()
     cur.execute(query)
     con.commit()
+#.......................................................
+#.......................................................data processing and storing
+def insert_Data_to_DataBase(conn):
+    data = []
+    con  = connect()
+    data = conn.recv()
+    #........................
+    #........................
+    query = "INSERT INTO SLAM(Time_stamp_begining ,Scan_data ,Partical_pos ,Errors , Cylinders ,Error_elipses ,Time_Stamp_end ,Opration_time) values('"+data[0]+"','"+data[1]+"' ,'"+data[2]+"','"+data[3]+"','"+data[4]+"','"+data[5]+"','"+data[6]+"','"+data[7]+"')"
+    SQL_CMD(con,query)
+    #print data
+    #return 0
+#........................................................
 #......................................................................
 if __name__ == '__main__':
     # Robot constants.
@@ -498,15 +513,22 @@ if __name__ == '__main__':
 
                 #................................
                 process_time = time_finish - time_start
-                print process_time.seconds +process_time.microseconds/1E6
+                print process_time.microseconds/1E6
                 #.................................
+                posed = []
+                for i in fs.particles:
+                    posed.append(tuple(i.pose))
                 #.................................
-                serialized_scan_data =json.dumps(scan_data)
-                en_serialized_scan_data = base64.b64encode(serialized_scan_data)
+                data =[str(time_start),str(scan_data),str(posed) ,str(
+                    errors) ,str(fs.particles[output_particle].landmark_positions), str(
+                    fs.particles[output_particle].landmark_covariances) ,str(time_finish), str(
+                    process_time.microseconds / 1E6)]
                 #.................................
-                #.................................
-                query = "INSERT INTO SLAM(Time_stamp_begining ,Scan_data ,Partical_pos ,Errors , Cylinders ,Error_elipses ,Time_Stamp_end ,Opration_time) values('"+str(time_start)+"' ,'"+en_serialized_scan_data+"' ,'"+str(fs.particles)+"','"+str(errors)+"','"+str(fs.particles[output_particle].landmark_positions)+"','"+str(fs.particles[output_particle].landmark_covariances)+"','"+str(time_finish)+"','"+str(process_time)+"')"
-                SQL_CMD(con,query)
+                perent_con,child_con = Pipe()
+                p = Process(target=insert_Data_to_DataBase , args=(child_con,))
+                p.start()
+                perent_con.send(data)
+                p.join()
                 #.................................
             time.sleep(0.5)
         f.close()
@@ -514,15 +536,6 @@ if __name__ == '__main__':
     except KeyboardInterrupt:
         f.close()
         sys.exit(2)
-#.......................................................
-#.......................................................data processing and storing
-def insert_Data_to_DataBase(conn):
-    data = []
-    data = con.recv()
-    return 0
-#........................................................
-#........................................................
-
 
 
 

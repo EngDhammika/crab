@@ -6,7 +6,6 @@
 # a modification is made to support the 'observation count' and removal
 # of spurious landmarks.
 
-
 from slam_g_library import get_cylinders_from_scan, write_cylinders,\
      write_error_ellipses, get_mean, get_error_ellipse_and_heading_variance,\
      print_particles,write_scanData
@@ -393,8 +392,12 @@ def insert_Data_to_DataBase(conn):
     data = conn.recv()
     #........................
     #........................
-    query = "INSERT INTO SLAM(Time_stamp_begining ,Scan_data ,Partical_pos ,Errors , Cylinders ,Error_elipses ,Time_Stamp_end ,Opration_time) values('"+data[0]+"','"+data[1]+"' ,'"+data[2]+"','"+data[3]+"','"+data[4]+"','"+data[5]+"','"+data[6]+"','"+data[7]+"')"
-    SQL_CMD(con,query)
+    query_1 = "INSERT INTO SLAM(Scan_data ,Partical_pos ,Errors , Cylinders ,Error_elipses) values('"+data[1]+"' ,'"+data[2]+"','"+data[3]+"','"+data[4]+"','"+data[5]+"')"
+    query_2 = "INSERT INTO performance(Time_Stamp_begining ,Time_Stamp_end ,Opration_time) values('"+data[0]+"','"+data[6]+"','"+data[7]+"')"
+    query_3 = "INSERT INTO Data_ref(is_New ) values('"+str(1)+"')"
+    SQL_CMD(con, query_1)
+    SQL_CMD(con,query_2)
+    SQL_CMD(con,query_3)
     #print data
     #return 0
 #........................................................
@@ -536,6 +539,7 @@ if __name__ == '__main__':
     except KeyboardInterrupt:
         f.close()
         sys.exit(2)
+
 
 
 
